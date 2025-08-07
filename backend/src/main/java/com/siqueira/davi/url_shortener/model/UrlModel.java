@@ -20,13 +20,13 @@ public class UrlModel {
     private String id;
 
     private String longUrl;
-    private String shortUrl;
+    private String shortCode;
 
     private LocalDateTime expirationDate;
 
-    public UrlModel(String longUrl, String shortUrl, LocalDateTime expirationDate) {
+    public UrlModel(String longUrl, String shortCode, LocalDateTime expirationDate) {
         this.longUrl = longUrl;
-        this.shortUrl = shortUrl;
+        this.shortCode = shortCode;
         this.expirationDate = expirationDate;
     }
 }

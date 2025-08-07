@@ -18,22 +18,22 @@ public class UrlService {
     }
 
     public UrlResponseDTO shortenUrl(String longUrl) {
-        // Checks if the longUrl is already mapped to a shortUrl.
+        // Checks if the longUrl is already mapped to a shortCode.
         Optional<UrlModel> existing = repository.findByLongUrl(longUrl);
 
         if (existing.isPresent()) {
-            return new UrlResponseDTO(existing.get().getShortUrl());
+            return new UrlResponseDTO(existing.get().getShortCode());
         }
 
         // If not, creates it.
-        String shortUrl;
+        String shortCode;
 
         do {
-            shortUrl = UUID.randomUUID().toString().substring(0, 8);
-        } while (repository.findByShortUrl(shortUrl).isPresent());
+            shortCode = UUID.randomUUID().toString().substring(0, 8);
+        } while (repository.findByShortCode(shortCode).isPresent());
 
-        UrlModel url = repository.save(new UrlModel(longUrl, shortUrl, LocalDateTime.now().plusDays(7)));
+        UrlModel url = repository.save(new UrlModel(longUrl, shortCode, LocalDateTime.now().plusDays(7)));
 
-        return new UrlResponseDTO(url.getShortUrl());
+        return new UrlResponseDTO(url.getShortCode());
     }
 }
