@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Document(collection = "url")
 @Setter
@@ -22,9 +21,9 @@ public class UrlModel {
     private String longUrl;
     private String shortCode;
 
-    private LocalDateTime expirationDate;
+    private Date expirationDate;
 
-    public UrlModel(String longUrl, String shortCode, LocalDateTime expirationDate) {
+    public UrlModel(String longUrl, String shortCode, Date expirationDate) {
         this.longUrl = longUrl;
         this.shortCode = shortCode;
         this.expirationDate = expirationDate;

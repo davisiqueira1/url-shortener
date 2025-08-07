@@ -6,6 +6,8 @@ import com.siqueira.davi.url_shortener.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -32,7 +34,7 @@ public class UrlService {
             shortCode = UUID.randomUUID().toString().substring(0, 8);
         } while (repository.findByShortCode(shortCode).isPresent());
 
-        UrlModel url = repository.save(new UrlModel(longUrl, shortCode, LocalDateTime.now().plusDays(7)));
+        UrlModel url = repository.save(new UrlModel(longUrl, shortCode, Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant())));
 
         return new UrlResponseDTO(url.getShortCode());
     }
