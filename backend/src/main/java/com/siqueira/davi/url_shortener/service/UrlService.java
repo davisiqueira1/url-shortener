@@ -36,4 +36,9 @@ public class UrlService {
 
         return new UrlResponseDTO(url.getShortCode());
     }
+
+    public Optional<String> getLongUrl(String shortCode) {
+        return repository.findByShortCode(shortCode)
+                .map(UrlModel::getLongUrl);
+    }
 }
