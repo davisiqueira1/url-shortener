@@ -9,7 +9,7 @@ async function shorten() {
             throw new Error('Please enter a valid URL.');
         }
 
-        const baseUrl = 'https://api.davisiqueira.com'
+        const baseUrl = 'http://localhost:8080'
 
         const response = await fetch(`${baseUrl}/api/shorten`, {
             method: 'POST',
@@ -24,8 +24,11 @@ async function shorten() {
         }
 
         const data = await response.json();
-        const shortenUrl = `${baseUrl}/${data.shortCode}`;
-        result.innerHTML = `Your Shortly link: <a href=${shortenUrl} target="_blank">${shortenUrl}</a>`;
+
+        const previewUrl = `${baseUrl.split("//")[1]}/${data.shortCode}`;
+        const realUrl = `${baseUrl}/${data.shortCode}`;
+
+        result.innerHTML = `Your Shortly link: <a href=${realUrl} target="_blank">${previewUrl}</a>`;
     } catch (error) {
         result.innerText = error.message;
     }
