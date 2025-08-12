@@ -3,12 +3,20 @@ async function shorten() {
     const result = document.getElementById('result');
 
     try {
-        const response = await fetch('http://localhost:8080/api/shorten', {
+        const validUrl = validateUrl(longUrl);
+
+        if (!validUrl) {
+            throw new Error('Please enter a valid URL.');
+        }
+
+        const baseUrl = 'https://api.davisiqueira.com'
+
+        const response = await fetch(`${baseUrl}/api/shorten`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ longUrl })
+            body: JSON.stringify({ longUrl: validUrl })
         });
 
         if (!response.ok) {
@@ -16,9 +24,30 @@ async function shorten() {
         }
 
         const data = await response.json();
-        const baseUrl = "http://localhost:8080/";
-        result.innerHTML = `Your Shortly link: <a href="${baseUrl + data.shortCode}" target="_blank">${baseUrl + data.shortCode}</a>`;
+        const shortenUrl = `${baseUrl}/${data.shortCode}`;
+        result.innerHTML = `Your Shortly link: <a href=${shortenUrl} target="_blank">${shortenUrl}</a>`;
     } catch (error) {
         result.innerText = error.message;
+    }
+
+    function validateUrl(str) {
+        str = str.trim();
+
+        if (!/^[a-z][a-z0-9+.-]*:/i.test(str)) {
+            str = `https://${str}`;
+        }
+
+        try {
+            const url = new URL(str);
+
+            const lastDotIndex = url.hostname.lastIndexOf('.');
+            if (lastDotIndex <= 0 || (url.hostname.length - lastDotIndex - 1) < 2) {
+                return undefined;
+            }
+
+            return url.href;
+        } catch (e) {
+            return undefined;
+        }
     }
 }
