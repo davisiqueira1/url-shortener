@@ -5,6 +5,10 @@
     Spring Boot URL Shortener with AWS Deployment
 </p>
 
+This project was an opportunity to learn both Spring Boot and AWS.  
+For those who want a deeper dive into the deployment process, architecture choices, and lessons learned, I wrote a complete article:  
+➡️ [Deploying an URL Shortener on AWS](https://davisiqueira1.github.io/blog/deploying-an-url-shortener-on-aws)
+
 ## Built with
 
 ![Spring]
