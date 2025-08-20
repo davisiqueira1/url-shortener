@@ -34,7 +34,13 @@ public class UrlService {
             shortCode = UUID.randomUUID().toString().substring(0, 8);
         } while (repository.findByShortCode(shortCode).isPresent());
 
-        UrlModel url = repository.save(new UrlModel(longUrl, shortCode, Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant())));
+        UrlModel url = repository.save(
+                UrlModel.builder()
+                    .longUrl(longUrl)
+                    .shortCode(shortCode)
+                    .expirationDate(Date.from(LocalDateTime.now().plusDays(7).atZone(ZoneId.systemDefault()).toInstant()))
+                    .build()
+        );
 
         return new UrlResponseDTO(url.getShortCode());
     }
